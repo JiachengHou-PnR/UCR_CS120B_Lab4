@@ -30,7 +30,7 @@ void Tick() {
         tmpB = 0x00;
         if (inChars == keyChars)
         {
-            inChars = {0, 0, 0, 0};
+            memset(&inChars[0], 0, sizeof(inChars));
             state = unlocked;
         }
         else if (tmpA)
@@ -63,7 +63,7 @@ void Tick() {
     case unlocked:
         if ((tmpA7 && !tmpA) || (inChars == keyChars))
         {
-            inChars = {0, 0, 0, 0};
+            memset(&inChars[0], 0, sizeof(inChars));
             state = locked;
         }
         else if (tmpA)
