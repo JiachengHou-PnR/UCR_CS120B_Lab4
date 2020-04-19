@@ -11,7 +11,7 @@
 #include "simAVRHeader.h"
 #endif
 
-enum States {Start, locked, step1, step2, unlocked} state;
+enum States {Start, locked, u_step1, u_step2, unlocked, l_step1, l_step2} state;
 
 unsigned char tmpA0, tmpA1, tmpA2, tmpA7;
 unsigned char tmpB;
@@ -28,7 +28,7 @@ void Tick() {
         tmpB = 0x00;
         if (tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
         {
-            state = step1;
+            state = u_step1;
         }
         else // (other / multiple keys)
         {
@@ -36,14 +36,14 @@ void Tick() {
         }
         break;
 
-    case step1:
+    case u_step1:
         if (tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
         {
-            state = step1;
+            state = u_step1;
         }
         else if (!tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
         {
-            state = step2;
+            state = u_step2;
         }
         else // (other / multiple keys)
         {
@@ -51,10 +51,10 @@ void Tick() {
         }
         break; 
 
-    case step2:
+    case u_step2:
         if (!tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
         {
-            state = step2;
+            state = u_step2;
         }
         else if (tmpA1 && !(tmpA0 || tmpA2 || tmpA7))
         {
@@ -71,11 +71,45 @@ void Tick() {
         {
             state = locked;
         }
+        else if (tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
+        {
+            state = l_step1;
+        }
+        else // (other / multiple keys)
+        {
+            state = unlocked;
+        }
+        break;
+
+    case l_step1:
+        if (tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
+        {
+            state = l_step1;
+        }
+        else if (!tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
+        {
+            state = l_step2;
+        }
         else // (other / multiple keys)
         {
             state = unlocked;
         }
         break; 
+
+    case l_step2:
+        if (!tmpA2 && !(tmpA0 || tmpA1 || tmpA7))
+        {
+            state = l_step2;
+        }
+        else if (tmpA1 && !(tmpA0 || tmpA2 || tmpA7))
+        {
+            state = locked;
+        }
+        else // (other / multiple keys)
+        {
+            state = unlocked;
+        }
+        break;
 
     default:
         state = locked;
@@ -90,9 +124,13 @@ void Tick() {
         tmpB = 0x00;
         break;
 
-    case step1:     break;
+    case u_step1:   break;
 
-    case step2:     break;
+    case u_step2:   break;
+
+    case l_step1:   break;
+
+    case l_step2:   break;
     
     case unlocked:  
         tmpB = 0x01;
