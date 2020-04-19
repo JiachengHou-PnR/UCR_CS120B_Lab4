@@ -40,7 +40,7 @@ echo Running all tests..."\n\n
 # checkResult
 
 # Test sequence from init: !A1 && A0 => PORTC: 0x08
-test "PINA 0x01 => PORTB: 0x08, state: increment"
+test "PINA 0x01 => PORTC: 0x08, state: increment"
 
 set state = init
 
@@ -54,7 +54,7 @@ expect state increment
 checkResult
 
 # Test sequence continue !A1 && A0 => PORTC: 0x08
-test "PINA 0x01 => PORTB: 0x08, state: increment"
+test "PINA 0x01 => PORTC: 0x08, state: increment"
 
 print state
 setPINA 0x01
@@ -66,7 +66,7 @@ expect state increment
 checkResult
 
 # Test sequence from init: A1 && A0 => PORTC: 0x00
-test "PINA 0x03 => PORTB: 0x00, state: reset"
+test "PINA 0x03 => PORTC: 0x00, state: reset"
 
 set state = init
 
@@ -80,7 +80,7 @@ expect state reset
 checkResult
 
 # Test sequence from init: (!A1 && A0) * 2, (!A1 && !A0), (!A1 && A0) * 2, (!A1 && !A0) => PORTC: 0x09
-test "PINA 0x01, 0x01, 0x00, 0x01, 0x01, 0x00 => PORTB: 0x0, state: wait"
+test "PINA 0x01, 0x01, 0x00, 0x01, 0x01, 0x00 => PORTC: 0x09, state: wait"
 
 set state = init
 
