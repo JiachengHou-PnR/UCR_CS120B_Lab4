@@ -40,10 +40,12 @@ void Tick() {
         }
         else if (tmpA0 && !tmpA1)
         {
+            if (tmpC < 9) tmpC++;
             state = increment;
         }
         else // (!tmpA0 && tmpA1)
         {
+            if (tmpC > 0) tmpC--;
             state = decrement;
         }
         break;        
@@ -96,25 +98,21 @@ void Tick() {
 
     switch (state)      // State Actions
     {
-    case Start: break;
+    case Start:     break;
     
-    case init:  break;
+    case init:      break;
 
-    case wait:  break;
+    case wait:      break;
 
-    case increment:
-        if (tmpC < 9) tmpC++;
-        break;
+    case increment: break;
     
-    case decrement:
-        if (tmpC > 0) tmpC--;
-        break;
+    case decrement: break;
 
     case reset:
         tmpC = 0;
         break;
 
-    default:    break;
+    default:        break;
     }
 }
 

@@ -53,6 +53,18 @@ expectPORTC 0x08
 expect state increment
 checkResult
 
+# Test sequence continue !A1 && A0 => PORTC: 0x08
+test "PINA 0x01 => PORTB: 0x08, state: increment"
+
+print state
+setPINA 0x01
+continue 2
+
+print state
+expectPORTC 0x08
+expect state increment
+checkResult
+
 # Test sequence from init: A1 && A0 => PORTC: 0x00
 test "PINA 0x03 => PORTB: 0x00, state: reset"
 
